@@ -1,0 +1,16 @@
+#!/bin/bash
+
+DIR="$HOME/cml/breakout"
+BIN="$DIR/breakout-linux-amd64"
+YAML="$DIR/labs.yaml"
+
+cd "$DIR" || exit 1
+
+# Generate labs.yaml
+"$BIN" init
+
+# Change line 8 to enable: true
+sed -i '8s/enabled: false/enabled: true/' "$YAML"
+
+# Run the program
+"$BIN" run

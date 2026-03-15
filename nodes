@@ -1,0 +1,21 @@
+#!/bin/bash
+
+YAML="$HOME/cml/breakout/labs.yaml"
+
+ports=($(grep "listen_port:" "$YAML" | awk '{print $2}'))
+labels=($(grep "label:" "$YAML" | awk '{print $2}'))
+
+count=${#ports[@]}
+
+for ((i=0;i<count;i++))
+do
+    label=${labels[$i]}
+    port=${ports[$i]}
+
+    echo "Opening $label on port $port"
+
+    terminator --new-tab \
+	-T "$label" \
+	-e "bash -c 'echo $label on port $port & telnet 127.0.0.1 $port'" & 
+
+done
